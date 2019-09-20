@@ -10,10 +10,13 @@ let storage = localStorage.getItem("login");
 
 if (storage) {
     login.value = storage;
-    password.focus();
+    phone.focus();
 } else {
     login.focus();
 }
+
+// login = login.replace(/[^a-zA-Z0-9_]/g, "", '');
+// phone = phone.replace(/[^0-9]/g, "", '');
 
 form.addEventListener("submit", function (event) {
 
@@ -41,6 +44,7 @@ form.addEventListener("submit", function (event) {
         localStorage.setItem("login", login.value);
 
         console.log('succed');
+        alert("Succed!");
     }
 });
 
