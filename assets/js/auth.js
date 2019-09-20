@@ -16,37 +16,50 @@ if (storage) {
 }
 
 form.addEventListener("submit", function (event) {
+
+    hideErrors();
+
     if (!login.value) {
         event.preventDefault();
+        showError(login, loginError);
+
         console.log('empty login');
 
-        loginError.classList.remove("hidden");
-        login.classList.add("is-danger");
-        loginError.classList.add("is-danger");
     } else if (!phone.value) {
         event.preventDefault();
+        showError(phone, phoneError);
+
         console.log('empty phone');
 
-        loginError.classList.add("hidden");
-        login.classList.remove("is-danger");
-        loginError.classList.remove("is-danger");
-
-        phoneError.classList.remove("hidden");
-        phoneError.classList.add("is-danger");
-        phone.classList.add("is-danger");
     } else if (!password.value) {
         event.preventDefault();
+        showError(password,passwordError);
+
         console.log('empty password');
 
-        phoneError.classList.add("hidden");
-        phoneError.classList.remove("is-danger");
-        phone.classList.remove("is-danger");
-
-        passwordError.classList.remove("hidden");
-        password.classList.add("is-danger");
-        passwordError.classList.add("is-danger");
     } else {
         localStorage.setItem("login", login.value);
+
         console.log('succed');
     }
 });
+
+function hideErrors() {
+    loginError.classList.add("hidden");
+    login.classList.remove("is-danger");
+    loginError.classList.remove("is-danger");
+
+    phoneError.classList.add("hidden");
+    phoneError.classList.remove("is-danger");
+    phone.classList.remove("is-danger");
+
+    passwordError.classList.add("hidden");
+    passwordError.classList.remove("is-danger");
+    password.classList.remove("is-danger");
+}
+
+function showError(field, error) {
+    field.classList.add("is-danger");
+    error.classList.add("is-danger");
+    error.classList.remove("hidden");
+}
