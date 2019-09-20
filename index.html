@@ -4,27 +4,41 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="assets/css/main.css">
+
+    <!-- for easy styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
 </head>
 <body>
-    <form>
-        <div class="field">
-            <label for="login">Логин</label>
-            <div>
-                <input type="text" name="login" id="login">
-                <p>Ошибка</p>
+    <div class="container">
+        <form>
+            <div class="field">
+                <label for="login" class="label">Логин</label>
+                <div class="control">
+                    <input class="input" type="text" name="login" id="login" placeholder="Логин"
+                           pattern="^[A-Za-z0-9_]{1,12}$">
+                </div>
+                <p class="help hidden" id="login-error">Заполните поле</p>
             </div>
-        </div>
-        <div class="field">
-            <label for="password">Пароль</label>
-            <div>
-                <input type="password" name="password" id="password">
-                <p>Ошибка</p>
+            <div class="field">
+                <label for="phone" class="label">Телефон</label>
+                <div class="control">
+                    <input class="input" type="tel" name="phone" id="phone" placeholder="Телефон"
+                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                </div>
+                <p class="help hidden" id="phone-error">Заполните поле</p>
             </div>
-        </div>
-        <div>
-            <button type="submit">Войти</button>
-        </div>
-    </form>
+            <div class="field">
+                <label for="password" class="label">Пароль</label>
+                <div class="control">
+                    <input class="input" type="password" name="password" id="password" placeholder="Пароль">
+                </div>
+                <p class="help hidden" id="password-error">Заполните поле</p>
+            </div>
+            <div class="control">
+                <button class="button" type="submit">Войти</button>
+            </div>
+        </form>
+    </div>
 <script src="assets/js/auth.js"></script>
 </body>
 </html>
