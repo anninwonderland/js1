@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <form>
@@ -14,9 +14,17 @@
                 <p>Ошибка</p>
             </div>
         </div>
-        <div class="field"></div>
-        <div class="field"></div>
+        <div class="field">
+            <label for="password">Пароль</label>
+            <div>
+                <input type="password" name="password" id="password">
+                <p>Ошибка</p>
+            </div>
+        </div>
+        <div>
+            <button type="submit">Войти</button>
+        </div>
     </form>
-<script rel="text/javascript" src="/assets/js/auth.js"></script>
+<script src="assets/js/auth.js"></script>
 </body>
 </html>
