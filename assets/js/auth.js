@@ -10,7 +10,6 @@ let form = document.querySelector("form");
 let storage = localStorage.getItem("login");
 
 class Field {
-
     constructor(input, error) {
         this.input = input;
         this.caption = error;
@@ -22,6 +21,7 @@ class Field {
         this.caption.classList.add("is-danger");
         this.caption.classList.remove("hidden");
     }
+
     hideError() {
         this.input.classList.remove("is-danger");
         this.caption.classList.remove("is-danger");
@@ -32,7 +32,9 @@ class Field {
         if (!this.input.value) {
             this.showError("Заполните поле");
             return true
-        } else { return false }
+        } else {
+            return false
+        }
     }
 
     isFormatted() {
@@ -41,7 +43,9 @@ class Field {
         if (formattedLength !== rawLength) {
             this.showError("Неверный формат");
             return false
-        } else { return true }
+        } else {
+            return true
+        }
     }
 
     isValidated() {
@@ -64,32 +68,34 @@ if (storage) {
 }
 
 form.addEventListener("submit", function (event) {
-
-    for (let field of fields) {
-        field.hideError();
-        if (field.isEmpty()) {
-            event.preventDefault();
-
-            field.input.addEventListener("keyup", function (ent) {
-                if (!field.isEmpty() && field.isFormatted() ) {
-                    field.hideError();
-
-                }
-            });
-        }
-    }
-
     let validated = 1;
 
     for (let field of fields) {
-        if (field.isValidated()) { validated *= 1 }
-        else { validated *= 0 }
+        field.hideError();
+
+        if (field.isEmpty()) {
+            event.preventDefault();
+        }
+
+        //turning on live validation
+        field.input.addEventListener("keyup", function (ent) {
+            event.preventDefault();
+
+            if (!field.isEmpty() && field.isFormatted()) {
+                field.hideError();
+            }
+        });
+
+        if (field.isValidated()) {
+            validated *= 1
+        } else {
+            validated *= 0
+        }
     }
 
+    //check if all the fields filled correctly
     if (validated) {
         alert("Succeed!");
         localStorage.setItem("login", login.value);
     }
 });
-
-

@@ -9,36 +9,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
 </head>
 <body>
-    <div class="container">
-        <form>
-            <div class="field">
-                <label for="login" class="label">Логин</label>
-                <div class="control">
-                    <input class="input" type="text" name="login" id="login" placeholder="Логин"
-                           pattern="^[A-Za-z0-9_]{1,12}$">
-                </div>
-                <p class="help hidden" id="login-error">Заполните поле</p>
-            </div>
-            <div class="field">
-                <label for="phone" class="label">Телефон</label>
-                <div class="control">
-                    <input class="input" type="tel" name="phone" id="phone" placeholder="Телефон"
-                        pattern="[0-9]{11}">
-                </div>
-                <p class="help hidden" id="phone-error">Заполните поле</p>
-            </div>
-            <div class="field">
-                <label for="password" class="label">Пароль</label>
-                <div class="control">
-                    <input class="input" type="password" name="password" id="password" placeholder="Пароль">
-                </div>
-                <p class="help hidden" id="password-error">Заполните поле</p>
-            </div>
+<div class="container">
+    <form>
+        <div class="field">
+            <label for="login" class="label">Логин</label>
             <div class="control">
-                <button class="button" type="submit">Войти</button>
+                <input class="input" type="text" name="login" id="login" placeholder="Логин"
+                       pattern="^[A-Za-z0-9_]{1,12}$">
             </div>
-        </form>
-    </div>
+            <p class="help hidden" id="login-error">Заполните поле</p>
+        </div>
+        <div class="field">
+            <label for="phone" class="label">Телефон</label>
+            <div class="control">
+                <input class="input" type="tel" name="phone" id="phone" placeholder="Телефон"
+                       pattern="[0-9]{11}">
+            </div>
+            <p class="help hidden" id="phone-error">Заполните поле</p>
+        </div>
+        <div class="field">
+            <label for="password" class="label">Пароль</label>
+            <div class="control">
+                <input class="input" type="password" name="password" id="password" placeholder="Пароль">
+            </div>
+            <p class="help hidden" id="password-error">Заполните поле</p>
+        </div>
+        <div class="control">
+            <button class="button" type="submit">Войти</button>
+        </div>
+    </form>
+</div>
 <script src="assets/js/auth.js"></script>
 </body>
 </html>
