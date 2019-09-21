@@ -10,9 +10,10 @@ let form = document.querySelector("form");
 let storage = localStorage.getItem("login");
 
 class Field {
-    constructor(input, error) {
+    constructor(input, error, type) {
         this.input = input;
         this.caption = error;
+        this.type = type;
     }
 
     showError(withMessage) {
@@ -38,14 +39,28 @@ class Field {
     }
 
     isFormatted() {
-        let formattedLength = this.input.value.replace(/[^a-zA-Z0-9_]/g, "", '').length;
         let rawLength = this.input.value.length;
+        let formattedLength = (this.type === "tel") ?
+            this.input.value.replace(/[^0-9]/g, "").length :
+            this.input.value.replace(/[^a-zA-Z0-9_]/g, "").length;
+
         if (formattedLength !== rawLength) {
             this.showError("Неверный формат");
             return false
-        } else {
-            return true
         }
+
+        if (this.type === "tel" && formattedLength !== 11) {
+            this.showError("Номер состоит из 11 цифр");
+            return false
+        }
+
+        if (this.type !== "tel" && (formattedLength < 6)) {
+            this.showError("Введите более 6 символов");
+            return false
+        }
+
+        return true
+
     }
 
     isValidated() {
@@ -54,9 +69,9 @@ class Field {
 
 }
 
-let loginField = new Field(login, loginError);
-let phoneField = new Field(phone, phoneError);
-let passwordField = new Field(password, passwordError);
+let loginField = new Field(login, loginError, "text");
+let phoneField = new Field(phone, phoneError, "tel");
+let passwordField = new Field(password, passwordError, "password");
 
 let fields = [loginField, phoneField, passwordField];
 
@@ -73,13 +88,12 @@ form.addEventListener("submit", function (event) {
     for (let field of fields) {
         field.hideError();
 
-        if (field.isEmpty()) {
+        if (field.isEmpty() || !field.isFormatted()) {
             event.preventDefault();
         }
 
         //turning on live validation
         field.input.addEventListener("keyup", function (ent) {
-            event.preventDefault();
 
             if (!field.isEmpty() && field.isFormatted()) {
                 field.hideError();
