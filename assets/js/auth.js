@@ -1,12 +1,60 @@
 let login = document.querySelector("[name=login]");
 let phone = document.querySelector("[name=phone]");
 let password = document.querySelector("[name=password]");
-let form = document.querySelector("form");
 
 let loginError = document.querySelector("#login-error");
 let phoneError = document.querySelector("#phone-error");
 let passwordError = document.querySelector("#password-error");
+
+let form = document.querySelector("form");
 let storage = localStorage.getItem("login");
+
+class Field {
+
+    constructor(input, error) {
+        this.input = input;
+        this.caption = error;
+    }
+
+    showError(withMessage) {
+        this.caption.innerHTML = withMessage;
+        this.input.classList.add("is-danger");
+        this.caption.classList.add("is-danger");
+        this.caption.classList.remove("hidden");
+    }
+    hideError() {
+        this.input.classList.remove("is-danger");
+        this.caption.classList.remove("is-danger");
+        this.caption.classList.add("hidden");
+    }
+
+    isEmpty() {
+        if (!this.input.value) {
+            this.showError("Заполните поле");
+            return true
+        } else { return false }
+    }
+
+    isFormatted() {
+        let formattedLength = this.input.value.replace(/[^a-zA-Z0-9_]/g, "", '').length;
+        let rawLength = this.input.value.length;
+        if (formattedLength !== rawLength) {
+            this.showError("Неверный формат");
+            return false
+        } else { return true }
+    }
+
+    isValidated() {
+        return !this.isEmpty() && this.isFormatted()
+    }
+
+}
+
+let loginField = new Field(login, loginError);
+let phoneField = new Field(phone, phoneError);
+let passwordField = new Field(password, passwordError);
+
+let fields = [loginField, phoneField, passwordField];
 
 if (storage) {
     login.value = storage;
@@ -15,55 +63,33 @@ if (storage) {
     login.focus();
 }
 
-// login = login.replace(/[^a-zA-Z0-9_]/g, "", '');
-// phone = phone.replace(/[^0-9]/g, "", '');
-
 form.addEventListener("submit", function (event) {
 
-    hideErrors();
+    for (let field of fields) {
+        field.hideError();
+        if (field.isEmpty()) {
+            event.preventDefault();
 
-    if (!login.value) {
-        event.preventDefault();
-        showError(login, loginError);
+            field.input.addEventListener("keyup", function (ent) {
+                if (!field.isEmpty() && field.isFormatted() ) {
+                    field.hideError();
 
-        console.log('empty login');
+                }
+            });
+        }
+    }
 
-    } else if (!phone.value) {
-        event.preventDefault();
-        showError(phone, phoneError);
+    let validated = 1;
 
-        console.log('empty phone');
+    for (let field of fields) {
+        if (field.isValidated()) { validated *= 1 }
+        else { validated *= 0 }
+    }
 
-    } else if (!password.value) {
-        event.preventDefault();
-        showError(password,passwordError);
-
-        console.log('empty password');
-
-    } else {
+    if (validated) {
+        alert("Succeed!");
         localStorage.setItem("login", login.value);
-
-        console.log('succed');
-        alert("Succed!");
     }
 });
 
-function hideErrors() {
-    loginError.classList.add("hidden");
-    login.classList.remove("is-danger");
-    loginError.classList.remove("is-danger");
 
-    phoneError.classList.add("hidden");
-    phoneError.classList.remove("is-danger");
-    phone.classList.remove("is-danger");
-
-    passwordError.classList.add("hidden");
-    passwordError.classList.remove("is-danger");
-    password.classList.remove("is-danger");
-}
-
-function showError(field, error) {
-    field.classList.add("is-danger");
-    error.classList.add("is-danger");
-    error.classList.remove("hidden");
-}
